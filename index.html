@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#ff5a36" />
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Domine:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Shop the RANK-IT STORE catalog</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f6f7f2;
+      --paper: #ffffff;
+      --ink: #151514;
+      --muted: #5d5e58;
+      --line: #d9dbd2;
+      --accent: #f2542d;
+      --accent-ink: #ffffff;
+      --aqua: #82d7d1;
+      --sun: #f6cf4a;
+      --soft: #e8efe9;
+      --shadow: 0 18px 50px rgba(34, 39, 33, .10);
+      --focus: #1468d4;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111310;
+        --paper: #1b1e19;
+        --ink: #f5f6f0;
+        --muted: #b9bdb3;
+        --line: #363b33;
+        --accent: #ff704d;
+        --accent-ink: #16130f;
+        --aqua: #4eaaa5;
+        --sun: #d5aa22;
+        --soft: #242b24;
+        --shadow: 0 18px 50px rgba(0, 0, 0, .34);
+        --focus: #75b2ff;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Archivo", sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; width: 100%; }
+    a { color: inherit; }
+    button, input { font: inherit; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .skip { position: absolute; top: -80px; left: 16px; z-index: 20; padding: 10px 14px; background: var(--ink); color: var(--bg); }
+    .skip:focus { top: 12px; }
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .topbar-inner {
+      max-width: 1180px;
+      margin: auto;
+      min-height: 58px;
+      padding: 10px 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-wordmark {
+      color: var(--ink);
+      font-size: 1.02rem;
+      font-weight: 800;
+      letter-spacing: -.025em;
+      text-decoration: none;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+    }
+    .brand-logo { width: 86px; height: 64px; object-fit: contain; }
+    .brand-fallback { display: none; }
+    .brand-wordmark.logo-failed .brand-fallback { display: inline; }
+    .hero-brand { margin: 0 auto 12px; width: 152px; }
+    .hero-brand img { width: 100%; height: auto; object-fit: contain; }
+    .hero-brand .brand-fallback { font-size: 1.25rem; font-weight: 800; letter-spacing: -.03em; }
+    .hero-brand.logo-failed .brand-fallback { display: inline-block; }
+    .nav-left { display: flex; align-items: center; gap: 28px; min-width: 0; }
+    .mini-nav { display: flex; align-items: center; gap: 22px; font-size: .91rem; font-weight: 700; }
+    .mini-nav a { text-decoration: none; }
+    .mini-nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .store-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border: 1px solid var(--ink);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: .88rem;
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .store-link svg { width: 16px; height: 16px; }
+    .theme-toggle {
+      width: 58px;
+      height: 32px;
+      padding: 3px;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--paper);
+    }
+    .theme-swatch { display: block; height: 100%; }
+    .theme-swatch.ivory { background: #f6f7f2; border-radius: 999px 0 0 999px; }
+    .theme-swatch.plum { background: #352451; border-radius: 0 999px 999px 0; }
+    .theme-thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      border: 2px solid #151514;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px #ffffff;
+      transition: transform .2s ease;
+      pointer-events: none;
+    }
+    body[data-preview-theme="plum"] .theme-thumb {
+      transform: translateX(26px);
+      border-color: #ffffff;
+      box-shadow: 0 0 0 1px #151514;
+    }
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 56px 24px 64px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, .95fr);
+      gap: 54px;
+      align-items: center;
+    }
+    .hero-copy {
+      padding: 26px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--accent);
+      font-size: .83rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-family: "Domine", serif;
+      font-size: clamp(3.1rem, 7.2vw, 6.7rem);
+      line-height: .89;
+      letter-spacing: -.06em;
+      max-width: 780px;
+    }
+    h1 span { display: block; }
+    h1 span:nth-child(2) { color: var(--accent); }
+    .hero-copy > p:not(.eyebrow) { max-width: 570px; font-size: 1.08rem; color: var(--muted); margin: 24px auto 0; }
+    .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+    .button {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 18px;
+      text-decoration: none;
+      font-weight: 800;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .button.secondary { background: transparent; color: var(--ink); }
+    .button:hover { translate: 0 -2px; box-shadow: 4px 4px 0 var(--accent); }
+    .hero-art {
+      min-height: 520px;
+      position: relative;
+      isolation: isolate;
+    }
+    .shape { position: absolute; z-index: -1; }
+    .shape.sun { width: 54%; aspect-ratio: 1; background: var(--sun); border-radius: 50%; right: 0; top: 3%; }
+    .shape.aqua { width: 56%; height: 54%; background: var(--aqua); left: 3%; bottom: 2%; transform: rotate(-5deg); }
+    .hero-photo {
+      position: absolute;
+      object-fit: cover;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .hero-photo.main { width: 59%; aspect-ratio: 1; right: 9%; top: 14%; transform: rotate(2.5deg); }
+    .hero-photo.small { width: 43%; aspect-ratio: 1; left: 0; bottom: 9%; transform: rotate(-4deg); border: 10px solid var(--paper); }
+    .sticker {
+      position: absolute;
+      right: 2%;
+      bottom: 7%;
+      width: 112px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--accent-ink);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-family: "Domine", serif;
+      font-size: 1.02rem;
+      line-height: 1.15;
+      transform: rotate(9deg);
+      box-shadow: var(--shadow);
+    }
+    .trust-strip { border-block: 1px solid var(--line); background: var(--paper); }
+    .trust-inner { max-width: 1180px; margin: auto; padding: 18px 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .trust-item { display: flex; gap: 12px; align-items: center; font-size: .92rem; font-weight: 700; }
+    .trust-item svg { flex: 0 0 auto; width: 25px; height: 25px; color: var(--accent); }
+    .section { max-width: 1180px; margin: auto; padding: 82px 24px; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 30px; }
+    .section-heading h2 { margin: 0; font-family: "Domine", serif; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.05; letter-spacing: -.035em; }
+    .section-heading p { margin: 0; max-width: 520px; color: var(--muted); }
+    .collection-grid { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 16px; }
+    .collection {
+      min-height: 250px;
+      position: relative;
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      text-decoration: none;
+    }
+    .collection:first-child { grid-row: span 2; min-height: 516px; }
+    .collection img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+    .collection:hover img { transform: scale(1.025); }
+    .collection-label {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      max-width: calc(100% - 32px);
+      background: var(--paper);
+      padding: 11px 14px;
+      font-weight: 800;
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+    .collection-label small { display: block; margin-top: 2px; color: var(--muted); font-weight: 500; }
+    .shop-panel { background: var(--paper); border-block: 1px solid var(--line); }
+    .shop-panel .section { padding-top: 72px; padding-bottom: 84px; }
+    .controls { display: grid; grid-template-columns: minmax(250px, 1fr) auto; gap: 18px; align-items: center; margin-bottom: 28px; }
+    .search-wrap { position: relative; }
+    .search-wrap svg { position: absolute; top: 50%; left: 15px; transform: translateY(-50%); width: 20px; color: var(--muted); pointer-events: none; }
+    #search { width: 100%; height: 48px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); padding: 0 16px 0 45px; border-radius: 0; }
+    .filters { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+    .filter { border: 1px solid var(--line); background: transparent; color: var(--ink); padding: 9px 13px; cursor: pointer; font-weight: 700; }
+    .filter:hover, .filter.active { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+    .results { margin: 0 0 18px; color: var(--muted); font-size: .9rem; }
+    .products { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 16px; }
+    .product { min-width: 0; }
+    .product[hidden] { display: none; }
+    .product-media { aspect-ratio: 1; background: #fff; overflow: hidden; border: 1px solid var(--line); position: relative; }
+    .product-media img { height: 100%; object-fit: cover; transition: opacity .65s ease, transform .35s ease; }
+    .product-carousel .product-slide { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+    .product-carousel .product-slide.active { opacity: 1; pointer-events: auto; }
+    .product:hover .product-slide.active { transform: scale(1.025); }
+    .carousel-arrow {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      translate: 0 -50%;
+      width: 34px;
+      height: 38px;
+      border: 0;
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      color: var(--ink);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,.13);
+    }
+    .carousel-arrow:hover { background: var(--paper); }
+    .carousel-arrow.prev { left: 8px; }
+    .carousel-arrow.next { right: 8px; }
+    .carousel-arrow svg { width: 18px; height: 18px; }
+    .carousel-dots {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      bottom: 9px;
+      translate: -50% 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
+      width: calc(100% - 78px);
+    }
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+      padding: 0;
+      border: 1px solid rgba(21,21,20,.5);
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      cursor: pointer;
+    }
+    .carousel-dot.active { background: var(--accent); border-color: var(--accent); }
+    .product-media:not(.product-carousel) img { transition: transform .35s ease; }
+    .product:hover .product-media:not(.product-carousel) img { transform: scale(1.035); }
+    .sale { position: absolute; top: 10px; left: 10px; padding: 5px 9px; background: var(--accent); color: var(--accent-ink); font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    .product-info { padding: 13px 3px 0; }
+    .product-type { color: var(--accent); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .product h3 { font-size: .98rem; line-height: 1.35; margin: 6px 0 8px; min-height: 2.7em; }
+    .price { font-family: "Domine", serif; font-weight: 700; font-size: 1.06rem; }
+    .product-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: .88rem; font-weight: 800; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+    .product-link svg { width: 15px; }
+    .empty { display: none; border: 1px solid var(--line); padding: 28px; color: var(--muted); }
+    .empty.visible { display: block; }
+    .view-all { margin-top: 38px; display: flex; justify-content: center; }
+    .detail-band { max-width: 1180px; margin: 0 auto; padding: 86px 24px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 58px; align-items: center; }
+    .detail-band img { aspect-ratio: 1; object-fit: cover; box-shadow: 15px 15px 0 var(--aqua); }
+    .detail-band h2 { font-family: "Domine", serif; font-size: clamp(2.1rem, 4vw, 3.6rem); line-height: 1.04; letter-spacing: -.04em; margin: 0 0 18px; }
+    .detail-band p { color: var(--muted); margin: 0 0 20px; }
+    .bullets { list-style: none; padding: 0; margin: 26px 0 30px; display: grid; gap: 13px; }
+    .bullets li { display: flex; gap: 11px; align-items: start; }
+    .bullets svg { width: 19px; flex: 0 0 19px; margin-top: 3px; color: var(--accent); }
+    body[data-preview-theme="ivory"] {
+      --bg: #f6f7f2;
+      --paper: #ffffff;
+      --ink: #151514;
+      --muted: #5d5e58;
+      --line: #d9dbd2;
+      --accent: #f2542d;
+      --accent-ink: #ffffff;
+      --aqua: #82d7d1;
+      --sun: #f6cf4a;
+      --soft: #e8efe9;
+      --focus: #1468d4;
+    }
+    body[data-preview-theme="plum"] {
+      --bg: #352451;
+      --paper: #453360;
+      --ink: #ffffff;
+      --muted: #ded4e9;
+      --line: #66527d;
+      --accent: #ff704d;
+      --accent-ink: #241b2e;
+      --aqua: #5fb9b2;
+      --sun: #e3b62c;
+      --soft: #4e3b68;
+      --focus: #9bc6ff;
+    }
+    .contact-panel { background: var(--soft); border-top: 1px solid var(--line); }
+    .contact-inner { max-width: 1180px; margin: 0 auto; padding: 70px 24px; display: grid; grid-template-columns: .75fr 1.25fr; gap: 56px; align-items: start; }
+    .contact-panel h2 { margin: 0; font-family: "Domine", serif; font-size: clamp(2rem, 4vw, 3.3rem); line-height: 1.05; letter-spacing: -.04em; }
+    .contact-panel p { margin: 14px 0 0; color: var(--muted); max-width: 410px; }
+    .contact-list { border-top: 1px solid var(--line); }
+    .contact-row { display: grid; grid-template-columns: 145px minmax(0, 1fr); gap: 20px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--line); text-decoration: none; }
+    .contact-row span { color: var(--muted); font-size: .84rem; font-weight: 700; }
+    .contact-row strong { overflow-wrap: anywhere; font-size: clamp(.92rem, 2vw, 1.08rem); }
+    .contact-row:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+    .pay { background: var(--ink); color: var(--bg); }
+    .pay-inner { max-width: 1180px; margin: auto; padding: 62px 24px; display: grid; grid-template-columns: .9fr 1.1fr; gap: 52px; align-items: center; }
+    .pay h2 { font-family: "Domine", serif; margin: 0; font-size: clamp(2rem, 4vw, 3.3rem); line-height: 1.05; letter-spacing: -.04em; }
+    .pay p { margin: 14px 0 0; color: color-mix(in srgb, var(--bg) 76%, transparent); }
+    .payment-list { display: flex; flex-wrap: wrap; gap: 9px; }
+    .payment-list span { padding: 10px 13px; background: color-mix(in srgb, var(--bg) 10%, transparent); border: 1px solid color-mix(in srgb, var(--bg) 32%, transparent); font-weight: 800; font-size: .87rem; }
+    .offers { background: var(--paper); border-bottom: 1px solid var(--line); }
+    .offers-inner { max-width: 1180px; margin: auto; padding: 72px 24px 78px; display: grid; grid-template-columns: .8fr 1.2fr; gap: 58px; align-items: start; }
+    .offers h2 { margin: 0; font-family: "Domine", serif; font-size: clamp(2.1rem, 4vw, 3.6rem); line-height: 1.04; letter-spacing: -.04em; }
+    .offers-copy > p { margin: 15px 0 0; max-width: 420px; color: var(--muted); }
+    .offers-form { display: grid; gap: 17px; }
+    .offer-fields { display: grid; grid-template-columns: .8fr 1.2fr; gap: 12px; }
+    .field { display: grid; gap: 7px; }
+    .field span { font-size: .8rem; font-weight: 800; }
+    .field input { width: 100%; min-height: 50px; border: 1px solid var(--line); border-radius: 0; background: var(--bg); color: var(--ink); padding: 11px 13px; }
+    .field input::placeholder { color: var(--muted); opacity: .8; }
+    .consent { display: grid; grid-template-columns: 21px minmax(0, 1fr); gap: 11px; align-items: start; color: var(--muted); font-size: .86rem; cursor: pointer; }
+    .consent input { width: 19px; height: 19px; margin: 2px 0 0; accent-color: var(--accent); }
+    .offers-action { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
+    .offers-action button { cursor: pointer; }
+    .offers-note { margin: 0; color: var(--muted); font-size: .78rem; max-width: 390px; }
+    .offers-status { min-height: 1.5em; margin: 0; color: var(--muted); font-size: .84rem; }
+    footer { max-width: 1180px; margin: auto; padding: 34px 24px 44px; display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: .82rem; }
+    footer a { color: var(--ink); font-weight: 800; text-underline-offset: 3px; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 40px; gap: 18px; }
+      .hero-art { min-height: 470px; max-width: 560px; width: 100%; margin: auto; }
+      .collection-grid { grid-template-columns: 1fr 1fr; }
+      .collection:first-child { grid-column: 1 / -1; grid-row: auto; min-height: 430px; }
+      .products { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .controls { grid-template-columns: 1fr; }
+      .filters { justify-content: flex-start; }
+      .detail-band, .contact-inner, .pay-inner, .offers-inner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .topbar-inner { padding-inline: 16px; min-height: 76px; gap: 8px; }
+      .brand-logo { width: 70px; height: 54px; }
+      .theme-toggle { width: 52px; height: 30px; }
+      .theme-thumb { width: 20px; height: 20px; }
+      body[data-preview-theme="plum"] .theme-thumb { transform: translateX(22px); }
+      .store-link { gap: 5px; padding: 8px; font-size: .74rem; }
+      .store-link svg { width: 14px; height: 14px; }
+      .hero-brand { width: 126px; margin-bottom: 10px; }
+      .nav-left { gap: 16px; }
+      .mini-nav { display: none; }
+      .hero { padding: 34px 16px 48px; }
+      h1 { font-size: clamp(3.2rem, 18vw, 5rem); }
+      .hero-art { min-height: 350px; }
+      .hero-photo.main { width: 63%; right: 5%; }
+      .hero-photo.small { width: 46%; }
+      .sticker { width: 88px; font-size: .8rem; }
+      .trust-inner { grid-template-columns: 1fr; gap: 14px; padding-inline: 16px; }
+      .section { padding: 60px 16px; }
+      .section-heading { align-items: start; flex-direction: column; }
+      .collection-grid { grid-template-columns: 1fr; }
+      .collection, .collection:first-child { grid-column: auto; min-height: 315px; }
+      .products { gap: 26px 12px; }
+      .product h3 { min-height: 0; font-size: .91rem; }
+      .product-type { font-size: .65rem; }
+      .filters { display: grid; grid-template-columns: 1fr 1fr; }
+      .filter { min-width: 0; }
+      .detail-band { padding: 64px 16px; gap: 42px; }
+      .contact-inner { padding: 54px 16px; gap: 30px; }
+      .contact-row { grid-template-columns: 1fr; gap: 4px; }
+      .pay-inner { padding: 54px 16px; gap: 28px; }
+      .offers-inner { padding: 54px 16px 60px; gap: 30px; }
+      .offer-fields { grid-template-columns: 1fr; }
+      .offers-action { align-items: stretch; flex-direction: column; }
+      .offers-action .button { width: 100%; }
+      footer { padding-inline: 16px; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#shop">Skip to products</a>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-inner">
+      <div class="nav-left">
+        <a class="brand-wordmark" href="#hero-title" aria-label="RANK-IT STORE home">
+          <img class="brand-logo" src="images/img_00.webp" alt="RANK-IT STORE" onerror="this.hidden=true;this.parentElement.classList.add('logo-failed')" />
+          <span class="brand-fallback">RANK-IT STORE</span>
+        </a>
+        <div class="mini-nav">
+          <a href="#collections">Collections</a>
+          <a href="#shop">Products</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <button class="theme-toggle" type="button" aria-label="Switch to deep plum theme" aria-pressed="false">
+        <span class="theme-swatch ivory" aria-hidden="true"></span>
+        <span class="theme-swatch plum" aria-hidden="true"></span>
+        <span class="theme-thumb" aria-hidden="true"></span>
+      </button>
+      <a class="store-link" href="https://rankitstore.square.site/s/shop" target="_blank" rel="noopener">Shop on Square
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="hero-brand">
+          <img src="images/img_01.webp" alt="RANK-IT STORE logo" onerror="this.hidden=true;this.parentElement.classList.add('logo-failed')" />
+          <span class="brand-fallback">RANK-IT STORE</span>
+        </div>
+        <p class="eyebrow">Everyday finds, playful details</p>
+        <h1 id="hero-title"><span>SHOP IT.</span><span>GET IT.</span><span>LOVE IT.</span></h1>
+        <p>Colorful hair accessories, smart storage, charging essentials and sunny-day favorites—all in one cheerful shop.</p>
+        <div class="hero-actions">
+          <a class="button" href="#shop">Browse products</a>
+          <a class="button secondary" href="https://rankitstore.square.site/s/shop" target="_blank" rel="noopener">View all 27 items</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Featured hair accessories">
+        <div class="shape sun"></div>
+        <div class="shape aqua"></div>
+        <img class="hero-photo main" src="images/img_02.webp" alt="Large burgundy organza hair bow with flowing tails" />
+        <img class="hero-photo small" src="images/img_03.webp" alt="Four reversible sequin mermaid tail headbands" />
+        <div class="sticker">Bright finds<br>from $7.99</div>
+      </div>
+    </section>
+
+    <section class="trust-strip" aria-label="Shopping highlights">
+      <div class="trust-inner">
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 7h11v10H3zM14 10h3l4 4v3h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span>Shipping and local delivery offered</span></div>
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16v11H4zM4 11h16M7 15h3"/></svg><span>Secure checkout through Square</span></div>
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg><span>Accessories, home goods and more</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="collections" aria-labelledby="collections-title">
+      <div class="section-heading">
+        <h2 id="collections-title">Shop by collection</h2>
+        <p>Jump straight to a category in the original RANK-IT STORE Square shop.</p>
+      </div>
+      <div class="collection-grid">
+        <a class="collection" href="https://rankitstore.square.site/shop/hair-accessories/GRRQ7PCMLLFN4RHPX7Y3T3M2?page=1&amp;limit=30&amp;sort_by=category_order&amp;sort_order=asc" target="_blank" rel="noopener">
+          <img src="images/img_04.webp" alt="Floral unicorn party headbands in five colors" />
+          <span class="collection-label">Hair accessories <small>Headbands, clips &amp; scrunchies</small></span>
+        </a>
+        <a class="collection" href="https://rankitstore.square.site/shop/home-and-kitchen/6NSNA4RODQT5YI6VEKCLCV54?page=1&amp;limit=30&amp;sort_by=category_order&amp;sort_order=asc" target="_blank" rel="noopener">
+          <img src="images/img_05.webp" alt="Blue vacuum storage bag package with compression bags and electric pump" />
+          <span class="collection-label">Home &amp; kitchen <small>Space-saving storage</small></span>
+        </a>
+        <a class="collection" href="https://rankitstore.square.site/shop/electrical/P2J6IU7Y7TP5HQJE6JXHZILW?page=1&amp;limit=30&amp;sort_by=category_order&amp;sort_order=asc" target="_blank" rel="noopener">
+          <img src="images/img_06.webp" alt="Two white 65 watt six-port wall chargers" />
+          <span class="collection-label">Electrical <small>Multiport chargers</small></span>
+        </a>
+        <a class="collection" href="https://rankitstore.square.site/shop/clothing-shoe-and-jewellery/UTO7K6XKI6HARVAKL4JDM5TI?page=1&amp;limit=30&amp;sort_by=category_order&amp;sort_order=asc" target="_blank" rel="noopener">
+          <img src="images/img_07.webp" alt="Two white children's sun hats with colorful cartoon prints" />
+          <span class="collection-label">Clothing, shoes &amp; jewellery <small>Hats &amp; caps</small></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="shop-panel" id="shop" aria-labelledby="shop-title">
+      <div class="section">
+        <div class="section-heading">
+          <h2 id="shop-title">Featured finds</h2>
+          <p>Explore verified picks from across the catalog, then complete your purchase securely in the Square shop.</p>
+        </div>
+        <div class="controls">
+          <label class="search-wrap">
+            <span class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Search products</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <input id="search" type="search" placeholder="Search featured products" autocomplete="off" />
+          </label>
+          <div class="filters" aria-label="Filter products">
+            <button class="filter active" type="button" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter" type="button" data-filter="hair" aria-pressed="false">Hair</button>
+            <button class="filter" type="button" data-filter="home" aria-pressed="false">Home</button>
+            <button class="filter" type="button" data-filter="electrical" aria-pressed="false">Electrical</button>
+            <button class="filter" type="button" data-filter="hats" aria-pressed="false">Hats</button>
+          </div>
+        </div>
+        <p class="results" id="resultCount" aria-live="polite">10 featured products</p>
+        <div class="products" id="productGrid">
+          <article class="product" data-category="hair" data-search="organza bow hair clip three piece girls women lavender grey peach">
+            <div class="product-media product-carousel" data-autoplay="5500"><img class="product-slide active" src="images/img_08.webp" alt="Large organza hair bow clip, product view 1 of 5" loading="lazy" /><img class="product-slide" src="images/img_09.webp" alt="Large organza hair bow clip, product view 2 of 5" loading="lazy" /><img class="product-slide" src="images/img_10.webp" alt="Large organza hair bow clip, product view 3 of 5" loading="lazy" /><img class="product-slide" src="images/img_11.webp" alt="Large organza hair bow clip, product view 4 of 5" loading="lazy" /><img class="product-slide" src="images/img_12.webp" alt="Large organza hair bow clip, product view 5 of 5" loading="lazy" /><button class="carousel-arrow prev" type="button" aria-label="Previous product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><button class="carousel-arrow next" type="button" aria-label="Next product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button><div class="carousel-dots" aria-label="Choose product image"><button class="carousel-dot active" type="button" aria-label="Show image 1 of 5" aria-pressed="true" data-slide="0"></button><button class="carousel-dot" type="button" aria-label="Show image 2 of 5" aria-pressed="false" data-slide="1"></button><button class="carousel-dot" type="button" aria-label="Show image 3 of 5" aria-pressed="false" data-slide="2"></button><button class="carousel-dot" type="button" aria-label="Show image 4 of 5" aria-pressed="false" data-slide="3"></button><button class="carousel-dot" type="button" aria-label="Show image 5 of 5" aria-pressed="false" data-slide="4"></button></div><span class="sale">Sale</span></div>
+            <div class="product-info"><div class="product-type">Hair clips</div><h3>Large organza hair bow clips · 3 pc</h3><div class="price">$8.99</div><a class="product-link" href="https://rankitstore.square.site/product/girls-women-3-pc-cute-large-organza-hair-bow-hair-clip-princess-gradient-ribbon-lace-barrettes-hairpins-hair-accessories/B25ZCWAZQZG2JNOI65WL4PLB" target="_blank" rel="noopener">Shop this item <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a></div>
+          </article>
+          <article class="product" data-category="hair" data-search="mermaid reversible sequin headband fish tail pearl pink ocean">
+            <div class="product-media product-carousel" data-autoplay="5500"><img class="product-slide active" src="images/img_13.webp" alt="Reversible sequin mermaid headband, product view 1 of 6" loading="lazy" /><img class="product-slide" src="images/img_14.webp" alt="Reversible sequin mermaid headband, product view 2 of 6" loading="lazy" /><img class="product-slide" src="images/img_15.webp" alt="Reversible sequin mermaid headband, product view 3 of 6" loading="lazy" /><img class="product-slide" src="images/img_16.webp" alt="Reversible sequin mermaid headband, product view 4 of 6" loading="lazy" /><img class="product-slide" src="images/img_17.webp" alt="Reversible sequin mermaid headband, product view 5 of 6" loading="lazy" /><img class="product-slide" src="images/img_18.webp" alt="Reversible sequin mermaid headband, product view 6 of 6" loading="lazy" /><button class="carousel-arrow prev" type="button" aria-label="Previous product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><button class="carousel-arrow next" type="button" aria-label="Next product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button><div class="carousel-dots" aria-label="Choose product image"><button class="carousel-dot active" type="button" aria-label="Show image 1 of 6" aria-pressed="true" data-slide="0"></button><button class="carousel-dot" type="button" aria-label="Show image 2 of 6" aria-pressed="false" data-slide="1"></button><button class="carousel-dot" type="button" aria-label="Show image 3 of 6" aria-pressed="false" data-slide="2"></button><button class="carousel-dot" type="button" aria-label="Show image 4 of 6" aria-pressed="false" data-slide="3"></button><button class="carousel-dot" type="button" aria-label="Show image 5 of 6" aria-pressed="false" data-slide="4"></button><button class="carousel-dot" type="button" aria-label="Show image 6 of 6" aria-pressed="false" data-slide="5"></button></div><span class="sale">Sale</span></div>
+            <div class="product-info"><div class="product-type">Themed headbands</div><h3>Reversible sequin mermaid headband</h3><div class="price">$7.99–$9.99</div><a class="product-link" href="https://rankitstore.square.site/product/mermaid-headband-girls-women-reversible-sequin-fish-tail-hair-bands-pearl-non-slip-teeth-cute-ocean-theme/X4LY5W4N5YIGTDDU6RMG44WV" target="_blank" rel="noopener">Shop this item <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a></div>
+          </article>
+          <article class="product" data-category="hair" data-search="unicorn floral glitter ears shiny horn pearl white party headband">
+            <div class="product-media product-carousel" data-autoplay="5500"><img class="product-slide active" src="images/img_19.webp" alt="Floral unicorn headband, product view 1 of 3" loading="lazy" /><img class="product-slide" src="images/img_20.webp" alt="Floral unicorn headband, product view 2 of 3" loading="lazy" /><img class="product-slide" src="images/img_21.webp" alt="Floral unicorn headband, product view 3 of 3" loading="lazy" /><button class="carousel-arrow prev" type="button" aria-label="Previous product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><button class="carousel-arrow next" type="button" aria-label="Next product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button><div class="carousel-dots" aria-label="Choose product image"><button class="carousel-dot active" type="button" aria-label="Show image 1 of 3" aria-pressed="true" data-slide="0"></button><button class="carousel-dot" type="button" aria-label="Show image 2 of 3" aria-pressed="false" data-slide="1"></button><button class="carousel-dot" type="button" aria-label="Show image 3 of 3" aria-pressed="false" data-slide="2"></button></div></div>
+            <div class="product-info"><div class="product-type">Themed headbands</div><h3>Floral unicorn headband · Pearl white</h3><div class="price">$9.99</div><a class="product-link" href="https://rankitstore.square.site/product/unicorn-headband-magical-floral-with-glitter-ears-shiny-horn-premium-party-hair-accessory-return-favours-pear-white-/6I32HVNUFJTJNFAU5KSA3SUO" target="_blank" rel="noopener">Shop this item <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a></div>
+          </article>
+          <article class="product" data-category="hair" data-search="27 piece girls hair clip set pastel spring easter purple yellow green princess">
+            <div class="product-media product-carousel" data-autoplay="5500"><img class="product-slide active" src="images/img_22.webp" alt="Pastel 27-piece hair clip set, product view 1 of 5" loading="lazy" /><img class="product-slide" src="images/img_23.webp" alt="Pastel 27-piece hair clip set, product view 2 of 5" loading="lazy" /><img class="product-slide" src="images/img_24.webp" alt="Pastel 27-piece hair clip set, product view 3 of 5" loading="lazy" /><img class="product-slide" src="images/img_25.webp" alt="Pastel 27-piece hair clip set, product view 4 of 5" loading="lazy" /><img class="product-slide" src="images/img_26.webp" alt="Pastel 27-piece hair clip set, product view 5 of 5" loading="lazy" /><button class="carousel-arrow prev" type="button" aria-label="Previous product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><button class="carousel-arrow next" type="button" aria-label="Next product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button><div class="carousel-dots" aria-label="Choose product image"><button class="carousel-dot active" type="button" aria-label="Show image 1 of 5" aria-pressed="true" data-slide="0"></button><button class="carousel-dot" type="button" aria-label="Show image 2 of 5" aria-pressed="false" data-slide="1"></button><button class="carousel-dot" type="button" aria-label="Show image 3 of 5" aria-pressed="false" data-slide="2"></button><button class="carousel-dot" type="button" aria-label="Show image 4 of 5" aria-pressed="false" data-slide="3"></button><button class="carousel-dot" type="button" aria-label="Show image 5 of 5" aria-pressed="false" data-slide="4"></button></div></div>
+            <div class="product-info"><div class="product-type">Hair clips</div><h3>Pastel princess hair clip set · 27 pc</h3><div class="price">$14.99</div><a class="product-link" href="https://rankitstore.square.site/product/27-piece-girls-hair-clip-set-cute-princess-hair-accessories-for-girls-pastel-spring-easter-colors-puprle-yellow-green-/YROL4WYSPPJWLJZIBZMUFSUG" target="_blank" rel="noopener">Shop this item <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a></div>
+          </article>
+          <article class="product" data-category="hair" data-search="mermaid headband four pack glitter reversible sequin pink fantasy">
+            <div class="product-media product-carousel" data-autoplay="5500"><img class="product-slide active" src="images/img_27.webp" alt="Pink Fantasy mermaid headband, product view 1 of 4" loading="lazy" /><img class="product-slide" src="images/img_28.webp" alt="Pink Fantasy mermaid headband, product view 2 of 4" loading="lazy" /><img class="product-slide" src="images/img_29.webp" alt="Pink Fantasy mermaid headband, product view 3 of 4" loading="lazy" /><img class="product-slide" src="images/img_30.webp" alt="Pink Fantasy mermaid headband, product view 4 of 4" loading="lazy" /><button class="carousel-arrow prev" type="button" aria-label="Previous product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><button class="carousel-arrow next" type="button" aria-label="Next product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button><div class="carousel-dots" aria-label="Choose product image"><button class="carousel-dot active" type="button" aria-label="Show image 1 of 4" aria-pressed="true" data-slide="0"></button><button class="carousel-dot" type="button" aria-label="Show image 2 of 4" aria-pressed="false" data-slide="1"></button><button class="carousel-dot" type="button" aria-label="Show image 3 of 4" aria-pressed="false" data-slide="2"></button><button class="carousel-dot" type="button" aria-label="Show image 4 of 4" aria-pressed="false" data-slide="3"></button></div></div>
+            <div class="product-info"><div class="product-type">Themed headbands</div><h3>Glitter reversible mermaid headband · Pink Fantasy</h3><div class="price">$9.99</div><a class="product-link" href="https://rankitstore.square.site/product/mermaid-headband-girls-women-glitter-reversible-sequin-fish-tail-hair-bands-pearl-non-slip-teeth-cute-ocean-theme-4-pink-fantasy-/ZQIWAPKQN6SOS6SQDVG4RNGN" target="_blank" rel="noopener">Shop this item <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a></div>
+          </article>
+          <article class="product" data-category="hair" data-search="velvet scrunchies 12 pack colorful elastic hair ties women teens">
+            <div class="product-media product-carousel" data-autoplay="5500"><img class="product-slide active" src="images/img_31.webp" alt="Premium velvet scrunchies, product view 1 of 3" loading="lazy" /><img class="product-slide" src="images/img_32.webp" alt="Premium velvet scrunchies, product view 2 of 3" loading="lazy" /><img class="product-slide" src="images/img_33.webp" alt="Premium velvet scrunchies, product view 3 of 3" loading="lazy" /><button class="carousel-arrow prev" type="button" aria-label="Previous product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><button class="carousel-arrow next" type="button" aria-label="Next product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button><div class="carousel-dots" aria-label="Choose product image"><button class="carousel-dot active" type="button" aria-label="Show image 1 of 3" aria-pressed="true" data-slide="0"></button><button class="carousel-dot" type="button" aria-label="Show image 2 of 3" aria-pressed="false" data-slide="1"></button><button class="carousel-dot" type="button" aria-label="Show image 3 of 3" aria-pressed="false" data-slide="2"></button></div></div>
+            <div class="product-info"><div class="product-type">Scrunchies</div><h3>Premium velvet scrunchies · 12 pack</h3><div class="price">$9.99</div><a class="product-link" href="https://rankitstore.square.site/product/12-pack-premium-velvet-scrunchie-soft-colorful-elastic-hair-ties-ponytail-holder-cute-colors-elastic-hair-bands-teens-and-women/WFBYUI5SRCRQC4TH2IXZ2YPC" target="_blank" rel="noopener">Shop this item <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a></div>
+          </article>
+          <article class="product" data-category="home" data-search="vacuum compression storage bags electric pump comforters blankets clothes travel 3s 3m 3l 3j">
+            <div class="product-media product-carousel" data-autoplay="5500"><img class="product-slide active" src="images/img_34.webp" alt="Vacuum storage bag set with electric pump, product view 1 of 9" loading="lazy" /><img class="product-slide" src="images/img_35.webp" alt="Vacuum storage bag set with electric pump, product view 2 of 9" loading="lazy" /><img class="product-slide" src="images/img_36.webp" alt="Vacuum storage bag set with electric pump, product view 3 of 9" loading="lazy" /><img class="product-slide" src="images/img_37.webp" alt="Vacuum storage bag set with electric pump, product view 4 of 9" loading="lazy" /><img class="product-slide" src="images/img_38.webp" alt="Vacuum storage bag set with electric pump, product view 5 of 9" loading="lazy" /><img class="product-slide" src="images/img_39.webp" alt="Vacuum storage bag set with electric pump, product view 6 of 9" loading="lazy" /><img class="product-slide" src="images/img_40.webp" alt="Vacuum storage bag set with electric pump, product view 7 of 9" loading="lazy" /><img class="product-slide" src="images/img_41.webp" alt="Vacuum storage bag set with electric pump, product view 8 of 9" loading="lazy" /><img class="product-slide" src="images/img_42.webp" alt="Vacuum storage bag set with electric pump, product view 9 of 9" loading="lazy" /><button class="carousel-arrow prev" type="button" aria-label="Previous product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><button class="carousel-arrow next" type="button" aria-label="Next product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button><div class="carousel-dots" aria-label="Choose product image"><button class="carousel-dot active" type="button" aria-label="Show image 1 of 9" aria-pressed="true" data-slide="0"></button><button class="carousel-dot" type="button" aria-label="Show image 2 of 9" aria-pressed="false" data-slide="1"></button><button class="carousel-dot" type="button" aria-label="Show image 3 of 9" aria-pressed="false" data-slide="2"></button><button class="carousel-dot" type="button" aria-label="Show image 4 of 9" aria-pressed="false" data-slide="3"></button><button class="carousel-dot" type="button" aria-label="Show image 5 of 9" aria-pressed="false" data-slide="4"></button><button class="carousel-dot" type="button" aria-label="Show image 6 of 9" aria-pressed="false" data-slide="5"></button><button class="carousel-dot" type="button" aria-label="Show image 7 of 9" aria-pressed="false" data-slide="6"></button><button class="carousel-dot" type="button" aria-label="Show image 8 of 9" aria-pressed="false" data-slide="7"></button><button class="carousel-dot" type="button" aria-label="Show image 9 of 9" aria-pressed="false" data-slide="8"></button></div></div>
+            <div class="product-info"><div class="product-type">Home storage</div><h3>Vacuum storage bags + pump · 3S/3M/3L/3J</h3><div class="price">$24.99</div><a class="product-link" href="https://rankitstore.square.site/product/vacuum-compression-storage-space-saving-bags-for-comforters-blankets-clothes-travel-moving-with-plug-in-electric-pump-included-3s3m3l3j-e-pump-/XILI5PWLVWCBJ5TVABJ7HUEV" target="_blank" rel="noopener">Shop this item <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a></div>
+          </article>
+          <article class="product" data-category="home" data-search="vacuum compression storage bags electric pump comforters blankets clothes travel 4s 4m 4l">
+            <div class="product-media product-carousel" data-autoplay="5500"><img class="product-slide active" src="images/img_43.webp" alt="Vacuum storage bag assortment with electric pump, product view 1 of 9" loading="lazy" /><img class="product-slide" src="images/img_44.webp" alt="Vacuum storage bag assortment with electric pump, product view 2 of 9" loading="lazy" /><img class="product-slide" src="images/img_45.webp" alt="Vacuum storage bag assortment with electric pump, product view 3 of 9" loading="lazy" /><img class="product-slide" src="images/img_46.webp" alt="Vacuum storage bag assortment with electric pump, product view 4 of 9" loading="lazy" /><img class="product-slide" src="images/img_47.webp" alt="Vacuum storage bag assortment with electric pump, product view 5 of 9" loading="lazy" /><img class="product-slide" src="images/img_48.webp" alt="Vacuum storage bag assortment with electric pump, product view 6 of 9" loading="lazy" /><img class="product-slide" src="images/img_49.webp" alt="Vacuum storage bag assortment with electric pump, product view 7 of 9" loading="lazy" /><img class="product-slide" src="images/img_50.webp" alt="Vacuum storage bag assortment with electric pump, product view 8 of 9" loading="lazy" /><img class="product-slide" src="images/img_51.webp" alt="Vacuum storage bag assortment with electric pump, product view 9 of 9" loading="lazy" /><button class="carousel-arrow prev" type="button" aria-label="Previous product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><button class="carousel-arrow next" type="button" aria-label="Next product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button><div class="carousel-dots" aria-label="Choose product image"><button class="carousel-dot active" type="button" aria-label="Show image 1 of 9" aria-pressed="true" data-slide="0"></button><button class="carousel-dot" type="button" aria-label="Show image 2 of 9" aria-pressed="false" data-slide="1"></button><button class="carousel-dot" type="button" aria-label="Show image 3 of 9" aria-pressed="false" data-slide="2"></button><button class="carousel-dot" type="button" aria-label="Show image 4 of 9" aria-pressed="false" data-slide="3"></button><button class="carousel-dot" type="button" aria-label="Show image 5 of 9" aria-pressed="false" data-slide="4"></button><button class="carousel-dot" type="button" aria-label="Show image 6 of 9" aria-pressed="false" data-slide="5"></button><button class="carousel-dot" type="button" aria-label="Show image 7 of 9" aria-pressed="false" data-slide="6"></button><button class="carousel-dot" type="button" aria-label="Show image 8 of 9" aria-pressed="false" data-slide="7"></button><button class="carousel-dot" type="button" aria-label="Show image 9 of 9" aria-pressed="false" data-slide="8"></button></div></div>
+            <div class="product-info"><div class="product-type">Home storage</div><h3>Vacuum storage bags + pump · 4S/4M/4L</h3><div class="price">$24.99</div><a class="product-link" href="https://rankitstore.square.site/product/vacuum-compression-storage-space-saving-bags-for-comforters-blankets-clothes-travel-storage-moving-with-plug-in-electric-pump-included-4s4m4l-e-pump-/OKMTXVH7ZGLG7Q6HNXZAYDBT" target="_blank" rel="noopener">Shop this item <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a></div>
+          </article>
+          <article class="product" data-category="electrical" data-search="65w two pack multi port charger six ports usb c type c wall iphone ipad android">
+            <div class="product-media" data-autoplay="5500"><img src="images/img_52.webp" alt="65 watt six-port wall charger set" /></div>
+            <div class="product-info"><div class="product-type">Electrical</div><h3>65W six-port wall chargers · 2 pack</h3><div class="price">$15.99</div><a class="product-link" href="https://rankitstore.square.site/product/65w-2-pack-multi-port-charger-6-ports-pd-qc-charging-cube-brick-power-adapter-usb-type-c-port-wall-chargers-compatible-with-iphone-ipad-tablets-android-devices/F54WDALZCNMNETA7RXDQQBWM" target="_blank" rel="noopener">Shop this item <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a></div>
+          </article>
+          <article class="product" data-category="hats" data-search="sun hat wide brim bucket unisex adjustable chin strap kids 3 10 years white cartoon beach">
+            <div class="product-media product-carousel" data-autoplay="5500"><img class="product-slide active" src="images/img_53.webp" alt="Children's cartoon sun hat, product view 1 of 4" loading="lazy" /><img class="product-slide" src="images/img_54.webp" alt="Children's cartoon sun hat, product view 2 of 4" loading="lazy" /><img class="product-slide" src="images/img_55.webp" alt="Children's cartoon sun hat, product view 3 of 4" loading="lazy" /><img class="product-slide" src="images/img_56.webp" alt="Children's cartoon sun hat, product view 4 of 4" loading="lazy" /><button class="carousel-arrow prev" type="button" aria-label="Previous product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><button class="carousel-arrow next" type="button" aria-label="Next product image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button><div class="carousel-dots" aria-label="Choose product image"><button class="carousel-dot active" type="button" aria-label="Show image 1 of 4" aria-pressed="true" data-slide="0"></button><button class="carousel-dot" type="button" aria-label="Show image 2 of 4" aria-pressed="false" data-slide="1"></button><button class="carousel-dot" type="button" aria-label="Show image 3 of 4" aria-pressed="false" data-slide="2"></button><button class="carousel-dot" type="button" aria-label="Show image 4 of 4" aria-pressed="false" data-slide="3"></button></div></div>
+            <div class="product-info"><div class="product-type">Hats &amp; caps</div><h3>Kids’ wide-brim cartoon sun hat</h3><div class="price">$9.99</div><a class="product-link" href="https://rankitstore.square.site/product/sun-hat-wide-brim-bucket-hat-unisex-adjustable-chin-strap-summer-hat-for-hiking-beach-cartoon-size-3-10y-white-cartoon/NOFDQUFCVYFHJHU5ZM3SZ22W" target="_blank" rel="noopener">Shop this item <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a></div>
+          </article>
+        </div>
+        <div class="empty" id="emptyState">No featured products match that search. Try another term or choose “All.”</div>
+        <div class="view-all"><a class="button secondary" href="https://rankitstore.square.site/s/shop" target="_blank" rel="noopener">See the full 27-item catalog</a></div>
+      </div>
+    </section>
+
+    <section class="detail-band" aria-labelledby="detail-title">
+      <img src="images/img_57.webp" alt="All 27 pastel girls’ hair clips, including bows, flowers, shells and stars" />
+      <div>
+        <p class="eyebrow">A little color goes a long way</p>
+        <h2 id="detail-title">27 playful clips. Endless mix-and-match.</h2>
+        <p>This pastel set brings together bows, flowers, stars, hearts and ocean-inspired pieces for everyday outfits, celebrations and gifting.</p>
+        <ul class="bullets">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>27-piece variety pack</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Pastel purple, yellow and green palette</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Made for birthdays, spring looks and sweet surprises</span></li>
+        </ul>
+        <a class="button" href="https://rankitstore.square.site/product/27-piece-girls-hair-clip-set-cute-princess-hair-accessories-for-girls-pastel-spring-easter-colors-puprle-yellow-green-/YROL4WYSPPJWLJZIBZMUFSUG" target="_blank" rel="noopener">Shop the set · $14.99</a>
+      </div>
+    </section>
+
+    <section class="contact-panel" id="contact" aria-labelledby="contact-title">
+      <div class="contact-inner">
+        <div>
+          <h2 id="contact-title">How can we help?</h2>
+          <p>Choose the team that best matches your question.</p>
+        </div>
+        <div class="contact-list">
+          <a class="contact-row" href="mailto:info@rankitstore.org"><span>General information</span><strong>info@rankitstore.org</strong></a>
+          <a class="contact-row" href="mailto:Sales@rankitstore.org"><span>Sales</span><strong>Sales@rankitstore.org</strong></a>
+          <a class="contact-row" href="mailto:Customersupport@rankitstore.org"><span>Customer support</span><strong>Customersupport@rankitstore.org</strong></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="pay" aria-labelledby="pay-title">
+      <div class="pay-inner">
+        <div><h2 id="pay-title">Checkout your way.</h2><p>Purchases open in the original Square shop for secure checkout.</p></div>
+        <div class="payment-list" aria-label="Accepted payment methods">
+          <span>Cash App</span><span>Apple Pay</span><span>Google Pay</span><span>Visa</span><span>Mastercard</span><span>American Express</span><span>Discover</span><span>JCB</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="offers" aria-labelledby="offers-title">
+      <div class="offers-inner">
+        <div class="offers-copy">
+          <p class="eyebrow">Be first in line</p>
+          <h2 id="offers-title">Offers worth opening.</h2>
+          <p>Join the RANK-IT STORE email list for discounts, new arrivals and special offers.</p>
+        </div>
+        <form class="offers-form" id="offersForm">
+          <div class="offer-fields">
+            <label class="field"><span>First name</span><input id="offerName" name="name" type="text" autocomplete="given-name" placeholder="Your first name" required /></label>
+            <label class="field"><span>Email address</span><input id="offerEmail" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required /></label>
+            <label class="field" style="grid-column: 1 / -1;"><span>Phone number <em style="font-style:normal; color: var(--muted);">(optional)</em></span><input id="offerPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(555) 123-4567" /></label>
+          </div>
+          <label class="consent">
+            <input id="offerConsent" name="consent" type="checkbox" aria-label="I agree to receive promotional emails, offers, discounts and store updates from RANK-IT STORE and understand that I can unsubscribe at any time" required />
+            <span>I agree to receive promotional emails, offers, discounts and store updates from RANK-IT STORE. I understand I can unsubscribe at any time.</span>
+          </label>
+          <div class="offers-action">
+            <button class="button" type="submit">Join for offers</button>
+            <p class="offers-note">Your details go straight to our offers list. No spam, unsubscribe anytime.</p>
+          </div>
+          <p class="offers-status" id="offersStatus" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Catalog and prices checked September 19, 2026. Confirm final price and availability in the Square shop.</span>
+    <a href="https://rankitstore.square.site/?src=g-icon" target="_blank" rel="noopener">Visit RANK-IT STORE</a>
+  </footer>
+
+  <script>
+    (() => {
+      const buttons = [...document.querySelectorAll('.filter')];
+      const products = [...document.querySelectorAll('.product')];
+      const search = document.getElementById('search');
+      const count = document.getElementById('resultCount');
+      const empty = document.getElementById('emptyState');
+      let active = 'all';
+
+      function applyFilters() {
+        const query = search.value.trim().toLowerCase();
+        let visible = 0;
+        products.forEach(product => {
+          const categoryMatch = active === 'all' || product.dataset.category === active;
+          const textMatch = !query || product.dataset.search.includes(query) || product.textContent.toLowerCase().includes(query);
+          const show = categoryMatch && textMatch;
+          product.hidden = !show;
+          if (show) visible++;
+        });
+        count.textContent = `${visible} featured ${visible === 1 ? 'product' : 'products'}`;
+        empty.classList.toggle('visible', visible === 0);
+      }
+
+      buttons.forEach(button => button.addEventListener('click', () => {
+        active = button.dataset.filter;
+        buttons.forEach(item => {
+          const selected = item === button;
+          item.classList.toggle('active', selected);
+          item.setAttribute('aria-pressed', String(selected));
+        });
+        applyFilters();
+      }));
+      search.addEventListener('input', applyFilters);
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelectorAll('.product-carousel').forEach(carousel => {
+        const slides = [...carousel.querySelectorAll('.product-slide')];
+        const dots = [...carousel.querySelectorAll('.carousel-dot')];
+        const previous = carousel.querySelector('.carousel-arrow.prev');
+        const next = carousel.querySelector('.carousel-arrow.next');
+        const productName = carousel.closest('.product').querySelector('h3').textContent.trim();
+        previous.setAttribute('aria-label', `Previous image for ${productName}`);
+        next.setAttribute('aria-label', `Next image for ${productName}`);
+        carousel.querySelector('.carousel-dots').setAttribute('aria-label', `Choose image for ${productName}`);
+        dots.forEach((dot, index) => dot.setAttribute('aria-label', `Show image ${index + 1} of ${slides.length} for ${productName}`));
+        let current = 0;
+        let timer;
+        let isVisible = false;
+        let isPaused = false;
+
+        const show = (index, restart = true) => {
+          current = (index + slides.length) % slides.length;
+          slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+          dots.forEach((dot, i) => {
+            const selected = i === current;
+            dot.classList.toggle('active', selected);
+            dot.setAttribute('aria-pressed', String(selected));
+          });
+          if (restart) start();
+        };
+        const stop = () => {
+          if (timer) clearInterval(timer);
+          timer = null;
+        };
+        const start = () => {
+          stop();
+          if (!reduceMotion && isVisible && !isPaused && !document.hidden) {
+            const delay = Number(carousel.dataset.autoplay);
+            timer = setInterval(() => show(current + 1, false), delay);
+          }
+        };
+        previous.addEventListener('click', () => show(current - 1));
+        next.addEventListener('click', () => show(current + 1));
+        dots.forEach(dot => dot.addEventListener('click', () => show(Number(dot.dataset.slide))));
+        carousel.addEventListener('mouseenter', () => { isPaused = true; stop(); });
+        carousel.addEventListener('mouseleave', () => { isPaused = false; start(); });
+        carousel.addEventListener('focusin', () => { isPaused = true; stop(); });
+        carousel.addEventListener('focusout', event => {
+          if (!carousel.contains(event.relatedTarget)) { isPaused = false; start(); }
+        });
+        document.addEventListener('visibilitychange', start);
+        const observer = new IntersectionObserver(entries => {
+          isVisible = entries[0].isIntersecting;
+          if (isVisible) start(); else stop();
+        }, { threshold: .25 });
+        observer.observe(carousel);
+      });
+
+      const themeToggle = document.querySelector('.theme-toggle');
+      const themeColor = document.querySelector('meta[name="theme-color"]');
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+      let themeChosenByUser = false;
+      let currentTheme;
+
+      function setTheme(theme) {
+        currentTheme = theme;
+        document.body.dataset.previewTheme = theme;
+        const isPlum = theme === 'plum';
+        themeToggle.setAttribute('aria-pressed', String(isPlum));
+        themeToggle.setAttribute('aria-label', isPlum ? 'Switch to warm ivory theme' : 'Switch to deep plum theme');
+        themeColor.setAttribute('content', isPlum ? '#352451' : '#f6f7f2');
+      }
+
+      setTheme(systemPrefersDark.matches ? 'plum' : 'ivory');
+      themeToggle.addEventListener('click', () => {
+        themeChosenByUser = true;
+        setTheme(currentTheme === 'plum' ? 'ivory' : 'plum');
+      });
+      systemPrefersDark.addEventListener('change', event => {
+        if (!themeChosenByUser) setTheme(event.matches ? 'plum' : 'ivory');
+      });
+
+      const offersForm = document.getElementById('offersForm');
+      const offersStatus = document.getElementById('offersStatus');
+      const offersEndpoint = 'https://docs.google.com/forms/d/e/1FAIpQLSdw3MYsofkiZAyCOyIC7Cg4ZDT5SZhi5sue7W1EOOG0zgIlvQ/formResponse';
+      offersForm.addEventListener('submit', event => {
+        event.preventDefault();
+        if (!offersForm.reportValidity()) return;
+        const params = new URLSearchParams();
+        params.append('entry.2011471546', document.getElementById('offerName').value.trim());
+        params.append('entry.205878187', document.getElementById('offerEmail').value.trim());
+        const phone = document.getElementById('offerPhone').value.trim();
+        if (phone) params.append('entry.463982634', phone);
+        params.append('entry.2067002183', 'I agree');
+        offersStatus.textContent = 'Joining you to the list…';
+        fetch(offersEndpoint, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: params.toString()
+        }).then(() => {
+          offersStatus.textContent = 'You are on the list. Watch your inbox for offers and discounts.';
+          offersForm.reset();
+        }).catch(() => {
+          offersStatus.textContent = 'Something went wrong. Please try again.';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
